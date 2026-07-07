@@ -5,6 +5,9 @@ from backend.config import settings
 # For sqlite testing or dev fallback if needed, we can handle it.
 # Usually, production is PostgreSQL.
 db_url = settings.DATABASE_URL
+if db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
+
 connect_args = {}
 if db_url.startswith("sqlite"):
     connect_args = {"check_same_thread": False}
