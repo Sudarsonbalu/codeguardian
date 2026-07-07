@@ -72,3 +72,7 @@ def seed_database():
         print(f"Error seeding database: {e}")
     finally:
         db.close()
+
+if __name__ == "__main__":
+    seed_database()
+
