@@ -93,8 +93,7 @@ export default function LoginPage() {
   const handleOAuthLogin = (provider: string) => {
     setError(null);
     setIsLoading(true);
-    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-    window.location.href = `${backendUrl}/auth/${provider}/login`;
+    window.location.href = getApiUrl(`/auth/${provider}/login`);
   };
 
   const triggerDemo = async () => {
