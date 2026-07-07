@@ -106,7 +106,7 @@ export default function GitHubPage() {
               {!status.connected && (
                 <button
                   onClick={() => {
-                    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+                    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
                     window.location.href = `${backendUrl}/auth/github/login`;
                   }}
                   className="px-4 py-2 bg-[#7C3AED] hover:bg-[#6D28D9] text-white text-xs font-bold rounded-2xl transition-all flex items-center gap-1.5"
