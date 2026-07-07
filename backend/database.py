@@ -20,7 +20,7 @@ try:
         pass
 except Exception as e:
     print(f"Database connection failed ({e}). Falling back to local SQLite database.")
-    db_url = "sqlite:///codeguardian.db"
+    db_url = "sqlite:////tmp/codeguardian.db"
     connect_args = {"check_same_thread": False}
     engine = create_engine(
         db_url,
