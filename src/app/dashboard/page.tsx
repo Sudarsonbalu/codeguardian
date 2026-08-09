@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import DashboardLayout from '../../components/DashboardLayout';
-import { useAuthStore } from '../../store/authStore';
-import { getApiUrl } from '../../utils/api';
+import { useAuthStore } from '@/store/authStore';
+import { getApiUrl } from '@/utils/api';
 import { 
   FileCode2, ShieldAlert, Bug, Zap, LayoutGrid, ArrowUpRight, 
   ArrowDownRight, Code2, Plus, RefreshCw, ChevronRight, FileText, UserPlus
