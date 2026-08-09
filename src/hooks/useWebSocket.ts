@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
-import { useReviewStore } from '../store/reviewStore';
-import { getApiUrl, getWsUrl } from '../utils/api';
+import { useReviewStore } from '@/store/reviewStore';
+import { getApiUrl, getWsUrl } from '@/utils/api';
 
 export const useWebSocket = (reviewId: number | null) => {
   const socketRef = useRef<WebSocket | null>(null);
