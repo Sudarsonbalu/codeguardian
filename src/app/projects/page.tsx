@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import DashboardLayout from '../../components/DashboardLayout';
-import { useAuthStore } from '../../store/authStore';
-import { getApiUrl } from '../../utils/api';
+import { useAuthStore } from '@/store/authStore';
+import { getApiUrl } from '@/utils/api';
 import { 
   FolderKanban, Plus, ExternalLink, Calendar, 
   Trash2, ShieldAlert, CheckCircle, RefreshCw, X
