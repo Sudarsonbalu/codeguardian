@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import DashboardLayout from '../../components/DashboardLayout';
-import { useAuthStore } from '../../store/authStore';
-import { getApiUrl } from '../../utils/api';
-import { useReviewStore } from '../../store/reviewStore';
+import { useAuthStore } from '@/store/authStore';
+import { getApiUrl } from '@/utils/api';
+import { useReviewStore } from '@/store/reviewStore';
 import { 
   Terminal, Upload, FileArchive, GitBranch, ShieldCheck, 
   Settings2, HelpCircle, Code2, AlertTriangle, ArrowRight
