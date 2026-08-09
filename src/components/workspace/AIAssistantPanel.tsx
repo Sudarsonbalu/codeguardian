@@ -5,8 +5,8 @@ import {
   Bot, Send, Copy, Check, Sparkles, Code2, FileText,
   Zap, GitCommit, ChevronDown, Loader2, BookOpen, Wand2
 } from 'lucide-react';
-import { useAuthStore } from '../../store/authStore';
-import { getApiUrl } from '../../utils/api';
+import { useAuthStore } from '@/store/authStore';
+import { getApiUrl } from '@/utils/api';
 
 interface Message {
   role: 'user' | 'assistant';
