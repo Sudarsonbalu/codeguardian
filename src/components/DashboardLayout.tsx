@@ -2,14 +2,14 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { useAuthStore } from '../store/authStore';
+import { useAuthStore } from '@/store/authStore';
 import { 
   LayoutDashboard, PlusCircle, FolderGit2, GitPullRequest, 
   Terminal, BarChart3, Users, History, Settings, CreditCard,
   Search, Bell, LogOut, Code2, Menu, X, Check, Brain
 } from 'lucide-react';
 import Link from 'next/link';
-import { getApiUrl } from '../utils/api';
+import { getApiUrl } from '@/utils/api';
 
 const Github = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
