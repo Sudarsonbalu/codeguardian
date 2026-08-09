@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Terminal, Plus, X, Trash2 } from 'lucide-react';
-import { getWsUrl } from '../../utils/api';
+import { getWsUrl } from '@/utils/api';
 
 interface TerminalTab {
   id: string;
