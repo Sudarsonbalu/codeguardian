@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import DashboardLayout from '../../components/DashboardLayout';
-import { useAuthStore } from '../../store/authStore';
-import { getApiUrl } from '../../utils/api';
+import { useAuthStore } from '@/store/authStore';
+import { getApiUrl } from '@/utils/api';
 import {
   Wand2, Zap, FileText, GitCommit, BookOpen, Code2, Copy,
   Check, Download, ChevronDown, Loader2, Sparkles, RefreshCw,
