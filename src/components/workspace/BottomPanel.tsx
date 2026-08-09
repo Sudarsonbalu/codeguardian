@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { AlertTriangle, Info, Terminal, GitBranch, List, Activity, ChevronDown, Loader2 } from 'lucide-react';
-import { getApiUrl } from '../../utils/api';
+import { getApiUrl } from '@/utils/api';
 import TerminalPanel from './TerminalPanel';
 import GitWorkspacePanel from './GitWorkspacePanel';
 
