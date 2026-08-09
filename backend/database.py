@@ -1,10 +1,15 @@
+import os
+import tempfile
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 from backend.config import settings
 
-# For sqlite testing or dev fallback if needed, we can handle it.
-# Usually, production is PostgreSQL.
 db_url = settings.DATABASE_URL
+
+if not db_url or not db_url.strip():
+    tmp_db = os.path.join(tempfile.gettempdir(), "codeguardian.db")
+    db_url = f"sqlite:///{tmp_db}"
+
 if db_url.startswith("postgres://"):
     db_url = db_url.replace("postgres://", "postgresql://", 1)
 elif db_url.startswith("mysql://"):
@@ -20,12 +25,12 @@ try:
         pool_pre_ping=True,
         connect_args=connect_args
     )
-    # Test connection
     with engine.connect() as conn:
         pass
 except Exception as e:
-    print(f"Database connection failed ({e}). Falling back to local SQLite database.")
-    db_url = "sqlite:////tmp/codeguardian.db"
+    print(f"Database connection note ({e}). Falling back to temporary SQLite database.")
+    tmp_db = os.path.join(tempfile.gettempdir(), "codeguardian.db")
+    db_url = f"sqlite:///{tmp_db}"
     connect_args = {"check_same_thread": False}
     engine = create_engine(
         db_url,
@@ -34,7 +39,6 @@ except Exception as e:
     )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
 Base = declarative_base()
 
 def get_db():
