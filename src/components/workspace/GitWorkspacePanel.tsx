@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { GitBranch, RefreshCw, GitCommit, FileText, ArrowDown, ArrowUp, Plus, History } from 'lucide-react';
-import { getApiUrl } from '../../utils/api';
+import { getApiUrl } from '@/utils/api';
 
 interface GitWorkspacePanelProps {
   token: string;
