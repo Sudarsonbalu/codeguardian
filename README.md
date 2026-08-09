@@ -1,6 +1,57 @@
-# CodeGuardian AI - Enterprise AI Code Review Assistant
+# CodeGuardian AI — Enterprise AI Code Review Assistant
 
-CodeGuardian AI is a production-ready, enterprise-grade AI Code Review Assistant similar to GitHub Copilot Code Review, CodeRabbit, and SonarQube. It features a premium dark theme, Glassmorphism UI, real-time WebSocket analysis updates, and Monaco Editor integration.
+CodeGuardian AI is a production-ready, enterprise-grade AI Code Review Assistant and Developer Platform similar to GitHub Copilot Code Review, CodeRabbit, and SonarQube. It features a modern dark-mode Glassmorphism UI, real-time code analysis progress, multi-agent AI review engines, Monaco Editor integration, and a unified single Vercel deployment architecture.
+
+---
+
+## Deployment Architecture
+
+CodeGuardian AI is structured for **Single Vercel Project Deployment**:
+
+```text
+Next.js 15 Frontend (App Router)
+       +
+Python FastAPI Serverless Function (/api/index.py)
+       +
+PostgreSQL Database (or SQLite /tmp fallback)
+       +
+OpenAI / GitHub OAuth APIs
+       ↓
+Single Vercel Project Deployment
+```
+
+---
+
+## Directory Structure
+
+```text
+CodeGuardian/
+├── api/
+│   └── index.py             # Vercel Python Serverless Function entrypoint
+├── backend/
+│   ├── __init__.py
+│   ├── main.py              # FastAPI application setup & middleware
+│   ├── config.py            # Environment configuration
+│   ├── database.py          # SQLAlchemy PostgreSQL / SQLite fallback engine
+│   ├── seed.py              # Initial demo database seeding
+│   ├── models/              # SQLAlchemy database models
+│   ├── routers/             # API endpoint routers (/api/v1/...)
+│   ├── schemas/             # Pydantic data validation schemas
+│   └── services/            # Multi-agent AI orchestrator & services
+├── src/
+│   ├── app/                 # Next.js App Router pages
+│   ├── components/          # Glassmorphism React components
+│   ├── hooks/               # Custom React hooks (WebSockets + HTTP polling fallback)
+│   ├── store/               # Zustand state stores
+│   └── utils/               # Production API URL helper
+├── public/                  # Static assets
+├── package.json             # Root Next.js package config
+├── requirements.txt         # Root Python backend dependencies
+├── .python-version          # Python version (3.11)
+├── .env.example             # Environment variables template
+├── next.config.ts           # Next.js config with dev rewrites
+└── vercel.json              # Vercel serverless function routing rules
+```
 
 ---
 
@@ -19,66 +70,92 @@ CodeGuardian AI is a production-ready, enterprise-grade AI Code Review Assistant
 
 ### Backend
 - **FastAPI**
+- **Python 3.11**
 - **SQLAlchemy**
-- **PostgreSQL** / **SQLite** (automatic fallback)
-- **Redis**
-- **WebSockets**
+- **PostgreSQL** / **SQLite** (automatic serverless fallback)
+- **OpenAI API** (gpt-4o / gpt-3.5-turbo with local multi-agent fallback)
 
 ---
 
-## Setup & Running
+## Local Development Setup
 
-You can run the entire application stack using **Docker Compose** or run the frontend and backend services **locally**.
+### 1. Install Backend Dependencies & Start FastAPI
 
-### Option 1: Docker Compose (Recommended)
-Make sure you have Docker and Docker Compose installed, then run:
 ```bash
-docker-compose up --build
+# Install Python dependencies
+pip install -r requirements.txt
+
+# Start FastAPI server on port 8000
+uvicorn backend.main:app --reload --port 8000
 ```
-This launches PostgreSQL, Redis, FastAPI backend (port 8000), and Next.js frontend (port 3000).
 
-### Option 2: Local Development
+FastAPI will start on `http://localhost:8000`. API documentation is available at `http://localhost:8000/docs`.
 
-#### Step 1: Run the Backend
-1. Create a Python virtual environment and install packages:
-   ```bash
-   cd backend
-   python -m venv venv
-   # On Windows:
-   venv\Scripts\activate
-   # On macOS/Linux:
-   source venv/bin/activate
-   
-   pip install -r requirements.txt
-   ```
-2. Start the FastAPI development server:
-   ```bash
-   uvicorn backend.main:app --reload --port 8000
-   ```
-   *Note: On first startup, the database is automatically created as a local SQLite file (if PostgreSQL is not running) and seeded with demo projects and code reviews.*
+### 2. Install Frontend Dependencies & Start Next.js
 
-#### Step 2: Run the Frontend
-1. Move to the frontend folder and run the development server:
-   ```bash
-   cd frontend
-   npm run dev
-   ```
-2. Open [http://localhost:3000](http://localhost:3000) in your browser.
+```bash
+# Install Node dependencies
+npm install
+
+# Start Next.js dev server on port 3000
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser. Next.js automatically proxies `/api/*` calls to `http://localhost:8000/api/*` in development.
 
 ---
 
-## Interactive Features
+## Single Vercel Project Deployment
 
-### 1. Authenticate / Login
-- Login with the pre-seeded account:
-  - **Email:** `demo@codeguardian.ai`
-  - **Password:** `demo1234`
-- Or use the **Single-Click Demo Login** or OAuth mock options.
+1. **Push your repository to GitHub / GitLab**.
+2. **Import the repository into Vercel** as a single project.
+3. Configure project settings:
+   - **Framework Preset**: Next.js
+   - **Root Directory**: `./` (Project root)
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `.next`
+4. Add Environment Variables in Vercel Dashboard (see template below).
+5. Click **Deploy**. Vercel will automatically build the Next.js frontend and mount `api/index.py` as a Python Serverless Function.
 
-### 2. Live WebSocket Code Review
-1. Navigate to **New Review**.
-2. Select a project workspace, provide a title, and select code parameters.
-3. Paste a block of code (containing credentials or vulnerable SQL lines to test rule audits) and click **Start Review**.
-4. You will see a real-time progress bar tracking the compilation pipeline (*Parsing files -> Static analysis -> AI reasoning -> Completed*) pushing updates over WebSockets.
-5. Click on line-level issues on the right panel to automatically scroll Monaco Editor to the target line.
-6. Trigger the floating **AI Assistant** chat to get code fixes or explain specific lines.
+---
+
+## Environment Variables (.env.example)
+
+```env
+# Database Connection (PostgreSQL in production, SQLite /tmp fallback if empty)
+DATABASE_URL=postgresql://user:password@host:5432/dbname
+
+# JWT Secret
+SECRET_KEY=your_production_secret_key_here
+
+# OpenAI API Key (Server-side only)
+OPENAI_API_KEY=sk-proj-your-key-here
+
+# Application URLs & CORS
+FRONTEND_URL=https://your-app.vercel.app
+BACKEND_URL=https://your-app.vercel.app
+ALLOWED_ORIGINS=https://your-app.vercel.app
+
+# GitHub OAuth Integration (Optional)
+GITHUB_CLIENT_ID=your_github_client_id
+GITHUB_CLIENT_SECRET=your_github_client_secret
+GITHUB_REDIRECT_URI=https://your-app.vercel.app/api/v1/auth/github/callback
+
+# Next.js Public API Base URL (Leave empty on Vercel for relative origin calls)
+NEXT_PUBLIC_API_URL=
+```
+
+---
+
+## Authentication & Features
+
+1. **Single-Click Demo Account**:
+   - **Email:** `demo@codeguardian.ai`
+   - **Password:** `demo1234`
+2. **Multi-Agent AI Code Analysis**:
+   - Runs 7 concurrent AI agents (Bug Detection, Security, Performance, Clean Code, Documentation, Testing, Architecture).
+   - Generates issue severity rankings, inline diff suggestions, and Mermaid architecture diagrams.
+3. **Resilient Serverless Design**:
+   - Features automatic HTTP polling status fallback when WebSockets are unavailable in serverless environments.
+   - Graceful rule-engine fallback when `OPENAI_API_KEY` is omitted.
+# quackkk
