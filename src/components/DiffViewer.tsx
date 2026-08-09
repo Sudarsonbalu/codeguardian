@@ -6,7 +6,7 @@ import {
   X, Check, Clipboard, Download, RefreshCw, 
   ChevronDown, HelpCircle, TestTube, Sparkles 
 } from 'lucide-react';
-import { getApiUrl } from '../utils/api';
+import { getApiUrl } from '@/utils/api';
 
 interface DiffViewerProps {
   isOpen: boolean;
