@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuthStore } from '../../store/authStore';
+import { useAuthStore } from '@/store/authStore';
 import { Code2, Mail, Lock, ArrowRight, ShieldCheck, Cpu } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { getApiUrl } from '../../utils/api';
+import { getApiUrl } from '@/utils/api';
 
 const GithubIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
