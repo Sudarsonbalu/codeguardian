@@ -7,7 +7,7 @@ import datetime
 
 router = APIRouter(prefix="/health", tags=["health"])
 
-@router.get("/")
+@router.api_route("/", methods=["GET", "HEAD"])
 def health_check():
     return {"status": "healthy", "service": "CodeGuardian AI", "timestamp": datetime.datetime.utcnow().isoformat()}
 
