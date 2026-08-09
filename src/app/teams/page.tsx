@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import DashboardLayout from '../../components/DashboardLayout';
-import { useAuthStore } from '../../store/authStore';
-import { getApiUrl } from '../../utils/api';
+import { useAuthStore } from '@/store/authStore';
+import { getApiUrl } from '@/utils/api';
 import { 
   Users, UserPlus, ClipboardList, ShieldAlert, 
   Calendar, Check, AlertCircle, Trash2, Mail
