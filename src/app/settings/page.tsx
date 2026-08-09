@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import DashboardLayout from '../../components/DashboardLayout';
-import { useAuthStore } from '../../store/authStore';
-import { getApiUrl } from '../../utils/api';
+import { useAuthStore } from '@/store/authStore';
+import { getApiUrl } from '@/utils/api';
 import { 
   User, Key, BrainCircuit, Bell, CreditCard, Shield, 
   Settings, Check, Save, Sparkles, FolderKanban, Plus, RefreshCw
